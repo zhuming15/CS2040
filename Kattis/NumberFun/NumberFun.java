@@ -25,7 +25,7 @@ public class NumberFun {
 			String line = sc.nextLine();
 			String[] arr = line.split(" ");
 			
-			NumberFun.test(arr.get(0), arr.get(1), arr.get(2));
+			NumberFun.test(arr[0], arr[1], arr[2]);
 			counter--;
 		}
 	}
