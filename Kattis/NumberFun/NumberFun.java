@@ -9,7 +9,8 @@ public class NumberFun {
 		int c = Integer.parseInt(C);
 		if (a + b == c || a * b == c ||	
 			a - b == c || b - a == c || 
-			a / b == c || b / a == c) {
+			(a % b == 0 && a / b == c) ||
+		    (b % a == 0 && b / a == c)) {
 			System.out.println("Possible");
 			return;
 		}
