@@ -20,6 +20,6 @@ public class Autori {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String s = sc.next();
-		System.out.println("ShortForm is " + Autori.transform(s));
+		System.out.println(Autori.transform(s));
 	}	
 }
