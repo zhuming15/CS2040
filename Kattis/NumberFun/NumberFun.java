@@ -3,7 +3,10 @@ import java.util.ArrayList;
 import java.util.stream.*;
 
 public class NumberFun {
-	public static void test(int a, int b, int c) {
+	public static void test(String A, String B, String C) {
+		int a = Integer.parseInt(A);
+		int b = Integer.parseInt(B);
+		int c = Integer.parseInt(C);
 		if (a + b == c || a * b == c ||	
 			a - b == c || b - a == c || 
 			a / b == c || b / a == c) {
@@ -15,18 +18,14 @@ public class NumberFun {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		int counter = sc.nextInt();
+		String input = sc.nextLine();
+		int counter = Integer.parseInt(input);	
 
 		while (counter > 0) {
 			String line = sc.nextLine();
 			String[] arr = line.split(" ");
-			ArrayList<Integer> intList = new ArrayList<Integer>();
 			
-			for (String s : arr) {
-				intList.add(Integer.parseInt(s));
-			}
-
-			NumberFun.test(intList.get(0), intList.get(1), intList.get(2));
+			NumberFun.test(arr.get(0), arr.get(1), arr.get(2));
 			counter--;
 		}
 	}
