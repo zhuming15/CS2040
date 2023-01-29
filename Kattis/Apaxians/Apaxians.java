@@ -22,8 +22,8 @@ public class Apaxians {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		String input = sc.nextLine();
-		StringBuilder str = new StringBuilder();
-		str.append(input.charAt(0));
+		StringBuilder str = new StringBuilder(String.valueOf(input.charAt(0)));
+		//str.append(input.charAt(0));
 
 		for (int index = 1; index < input.length(); index++) {
 			if (input.charAt(index - 1) != input.charAt(index)) 
