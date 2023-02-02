@@ -45,7 +45,7 @@ class T9Spelling {
 			char currChar = word.charAt(index);
 			String charT9Value = T9Spelling.T9Table.get(currChar);
 
-			if (result.length() != 0 && (charT9Value.charAt(0) == result.charAt(result.length()-1)))
+			if (index != 0 && (charT9Value.charAt(0) == result.charAt(result.length()-1)))
 				result.append(" ");
 
 			result.append(charT9Value);
