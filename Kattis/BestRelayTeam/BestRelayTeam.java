@@ -8,14 +8,14 @@ public class BestRelayTeam {
 
 	BestRelayTeam() throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int numOfSprinters = Integer.valueOf(br.readLine());
+		int numOfSprinters = Integer.parseInt(br.readLine());
 		ArrayList<Sprinter> sprinterList = new ArrayList<Sprinter>();
 
 		for (int counter = 0; counter < numOfSprinters; counter++) {
 			String[] strarr = br.readLine().split(" ");
-			String name = String.valueOf(strarr[0]);
-			double firstRunTime = Double.valueOf(strarr[1]);
-			double secondRunTime = Double.valueOf(strarr[2]);
+			String name = strarr[0];
+			double firstRunTime = Double.parseDouble(strarr[1]);
+			double secondRunTime = Double.parseDouble(strarr[2]);
 			sprinterList.add(new Sprinter(name, firstRunTime, secondRunTime));
 		}
 		this.sprinterList = sprinterList;
@@ -50,9 +50,8 @@ public class BestRelayTeam {
 		}
 		pw.println(bestRecord);
 
-		for (Sprinter s : bestTeam) {
-			pw.println(s);
-		}
+		for (Sprinter s : bestTeam) pw.println(s);
+
 		pw.flush();
 		pw.close();
 	}
