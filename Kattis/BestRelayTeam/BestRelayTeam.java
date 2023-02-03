@@ -1,26 +1,28 @@
 import java.util.Scanner;
 import java.util.Comparator;
 import java.util.ArrayList;
+import java.io.*;
 
 public class BestRelayTeam {
 	private ArrayList<Sprinter> sprinterList;
 
-	BestRelayTeam() {
-		Scanner sc = new Scanner(System.in);
-		int numOfSprinters = Integer.valueOf(sc.nextLine());
+	BestRelayTeam() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int numOfSprinters = Integer.valueOf(br.readLine());
 		ArrayList<Sprinter> sprinterList = new ArrayList<Sprinter>();
 
 		for (int counter = 0; counter < numOfSprinters; counter++) {
-			String name = String.valueOf(sc.next());
-			double firstRunTime = Double.valueOf(sc.next());
-			double secondRunTime = Double.valueOf(sc.next());
+			String[] strarr = br.readLine().split(" ");
+			String name = String.valueOf(strarr[0]);
+			double firstRunTime = Double.valueOf(strarr[1]);
+			double secondRunTime = Double.valueOf(strarr[2]);
 			sprinterList.add(new Sprinter(name, firstRunTime, secondRunTime));
-			//sc.nextLine();
 		}
 		this.sprinterList = sprinterList;
 	}
 
 	public void computeBestTeam() {
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 		ArrayList<Sprinter> bestTeam = new ArrayList<Sprinter>();
 		double bestRecord = 21.0 * 4;
 
@@ -46,14 +48,16 @@ public class BestRelayTeam {
 				bestTeam = currTeam;
 			}
 		}
-		System.out.println(bestRecord);
+		pw.println(bestRecord);
 
 		for (Sprinter s : bestTeam) {
-			System.out.println(s);
+			pw.println(s);
 		}
+		pw.flush();
+		pw.close();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		BestRelayTeam BRT = new BestRelayTeam();
 		BRT.computeBestTeam();
 	}
