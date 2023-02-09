@@ -6,8 +6,7 @@ public class CardTrading {
 	private final int N;
 	private final int T;
 	private final int K;
-	private int C;
-	ArrayList<Card> deck = new ArrayList<Card>();
+	private ArrayList<Card> deck = new ArrayList<Card>();
 
 	//Constructor
 	CardTrading() throws IOException {

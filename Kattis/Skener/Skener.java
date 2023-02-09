@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Skener {
-	private static StringBuilder transformation(String s, int ZC) {
+	private static StringBuilder transformation(String s, int ZC) { //O(ZC * s.lenth())
 		StringBuilder transformedRow = new StringBuilder();
 		for (int charIndex = 0; charIndex < s.length(); charIndex++) {
 			for (int counter = 0; counter < ZC; counter++) {
@@ -11,13 +11,13 @@ public class Skener {
 		return transformedRow;
 	}
 
-	private static void repitition(StringBuilder s, int ZR) {
+	private static void repitition(StringBuilder s, int ZR) { //O(ZR)
 		for (int i = 0; i < ZR; i++) {
 			System.out.println(s);
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) { //O(R * ZR * ZC * s.length())
 		Scanner sc = new Scanner(System.in);
 		final int ROW = Integer.valueOf(sc.next());
 		final int COL = Integer.valueOf(sc.next());
