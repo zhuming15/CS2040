@@ -1,7 +1,10 @@
 import java.io.*;
-import java.util.ArrayList;
+//import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
 
 public class Akcija {
+	/*
 	public static void main(String[] args) throws IOException { 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int numOfBooks = Integer.parseInt(br.readLine());
@@ -19,5 +22,29 @@ public class Akcija {
 				pay += books.get(nthBook);
 		}
 		System.out.println(pay);
+	}
+	*/
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+		int numOfBooks = Integer.parseInt(br.readLine());
+		Integer[] books = new Integer[numOfBooks];
+
+		for (int counter = 0; counter < numOfBooks; counter++) {
+			books[counter] = Integer.valueOf(br.readLine());
+		}
+
+		Arrays.sort(books, Collections.reverseOrder());
+		int pay = 0;
+
+		for (int index = 0; index < numOfBooks; index++) {
+			if ((index + 1) % 3 != 0)
+				pay += books[index];
+		}
+		pw.println(pay);
+		pw.flush();
+		pw.close();
 	}
 }
