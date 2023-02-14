@@ -2,22 +2,21 @@ import java.io.*;
 
 public class JoinString {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Kattio io = new Kattio(System.in, System.out);
 		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
 
-		int numOfStrings = Integer.parseInt(br.readLine());
+		int numOfStrings = io.getInt();
 		StringBuilder[] wordList = new StringBuilder[numOfStrings+2];
 
 		for (int counter = 1; counter <= numOfStrings; counter++) {
-			wordList[counter] = new StringBuilder(br.readLine());
+			wordList[counter] = new StringBuilder(io.getWord());
 		}
 
 		StringBuilder lastString = wordList[1] == null ? new StringBuilder() : wordList[1];
 
 		for (int ithOperation = 1; ithOperation < numOfStrings; ithOperation++) {
-			String[] strarr = br.readLine().split(" ");
-			int a = Integer.parseInt(strarr[0]);
-			int b = Integer.parseInt(strarr[1]);
+			int a = io.getInt();
+			int b = io.getInt();
 
 			wordList[a].append(wordList[b]);
 			lastString = wordList[a];
