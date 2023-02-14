@@ -12,7 +12,7 @@ public class JoinString {
 			wordList[counter] = new StringBuilder(br.readLine());
 		}
 
-		StringBuilder lastString = wordList[1];
+		StringBuilder lastString = wordList[1] == null ? new StringBuilder() : wordList[1];
 
 		for (int ithOperation = 1; ithOperation < numOfStrings; ithOperation++) {
 			String[] strarr = br.readLine().split(" ");
