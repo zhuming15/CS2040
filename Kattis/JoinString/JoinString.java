@@ -8,21 +8,10 @@ public class JoinString {
 
 		int numOfStrings = io.getInt();
 		StringLinkedList[] wordList = new StringLinkedList[numOfStrings+2];
-		StringLinkedList head = null;
+		StringLinkedList head = new StringLinkedList("");
 
 		for (int counter = 1; counter <= numOfStrings; counter++) {
 			wordList[counter] = new StringLinkedList(io.getWord());
-		}
-
-		if (numOfStrings == 1) {
-		   	io.print(wordList[1].toString());
-			io.close();
-			return; 
-		}
-		if (numOfStrings == 0) {
-			io.print("");
-			io.close();
-			return;
 		}
 
 		for (int ithOperation = 1; ithOperation < numOfStrings; ithOperation++) {
