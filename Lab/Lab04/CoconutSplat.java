@@ -24,24 +24,28 @@ public class CoconutSplat {
 	}
 
 	void playRound() {
-		for (int  ithSyllable = 0; ithSyllable < numOfSyllables+1; ithSyllable++) {
+		for (int ithSyllable = 1; ithSyllable < numOfSyllables; ithSyllable++) {
+			System.out.println(dq.toString());
 			Player frontPlayer = dq.pollFirst();
 			dq.addLast(frontPlayer);
 		}
 	}
 
 	void endRoundAction() {
+		System.out.println(dq.toString());
 		Player endRoundPlayer = dq.pollFirst();
 
 		if (endRoundPlayer.isStillFolded()) {
 			endRoundPlayer.unfold();
 			dq.addFirst(endRoundPlayer);
-			dq.addFirst(endRoundPlayer);
-		} else if (endRoundPlayer.isNotPalmDown()) {
+			dq.addFirst(endRoundPlayer.createUnfoldHand());
+			System.out.println("1");
+		} else if (endRoundPlayer.haveNotPalmDown()) {
 			endRoundPlayer.palmDowning();
-			dq.addFirst(endRoundPlayer);
 			dq.addLast(endRoundPlayer);
+			System.out.println("2");
 		}
+		System.out.println("end round " + dq.toString());
 	}
 
 	public static void main(String[] args) throws IOException {
@@ -55,18 +59,28 @@ public class CoconutSplat {
 
 class Player {
 	final int NUM;
-	boolean stillFolded = true;
-	boolean palmDown = false;
+	boolean stillFolded;
+	boolean palmDown;
+
+	Player(int NUM, boolean stillFolded, boolean palmDown) {
+		this.NUM = NUM;
+		this.stillFolded = stillFolded;
+		this.palmDown = palmDown;
+	}
 
 	Player(int NUM) {
-		this.NUM = NUM;
+		this(NUM, true, false);
+	}
+
+	Player createUnfoldHand() {
+		return new Player(this.NUM, false, false);
 	}
 
 	boolean isStillFolded() {
 		return this.stillFolded;
 	}
 
-	boolean isNotPalmDown() {
+	boolean haveNotPalmDown() {
 		return !(this.palmDown);
 	}
 
