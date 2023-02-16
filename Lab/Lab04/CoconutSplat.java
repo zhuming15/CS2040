@@ -25,27 +25,22 @@ public class CoconutSplat {
 
 	void playRound() {
 		for (int ithSyllable = 1; ithSyllable < numOfSyllables; ithSyllable++) {
-			System.out.println(dq.toString());
 			Player frontPlayer = dq.pollFirst();
 			dq.addLast(frontPlayer);
 		}
 	}
 
 	void endRoundAction() {
-		System.out.println(dq.toString());
 		Player endRoundPlayer = dq.pollFirst();
 
 		if (endRoundPlayer.isStillFolded()) {
 			endRoundPlayer.unfold();
 			dq.addFirst(endRoundPlayer);
 			dq.addFirst(endRoundPlayer.createUnfoldHand());
-			System.out.println("1");
 		} else if (endRoundPlayer.haveNotPalmDown()) {
 			endRoundPlayer.palmDowning();
 			dq.addLast(endRoundPlayer);
-			System.out.println("2");
 		}
-		System.out.println("end round " + dq.toString());
 	}
 
 	public static void main(String[] args) throws IOException {
