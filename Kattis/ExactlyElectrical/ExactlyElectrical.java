@@ -15,7 +15,7 @@ public class ExactlyElectrical {
 	}
 
 	public char computePossibility() {
-		if (point1.possiblePath(numOfCharge, point2)) {
+		if (point1.isPossiblePath(numOfCharge, point2)) {
 			return 'Y';
 		}
 		return 'N';
@@ -51,7 +51,7 @@ class Point {
 		return this.y;
 	}
 
-	public boolean possiblePath(int n, Point p) {
+	public boolean isPossiblePath(int n, Point p) {
 		int minElecRequired = this.computeMinEletric(p);
 		int diff = n - minElecRequired;
 

@@ -1,28 +1,30 @@
 import java.io.*;
 
 public class SumKindOfProblem {
-	public static long computeAP(int n, int a, int d) {
-		long res = (2 * a) + (n - 1) * d;
+	public static int computeAP(int n, int a, int d) {
+		int res = (2 * a) + (n - 1) * d;
 		res = (n * res) / 2;
 		return res;
 	}
 
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		PrintWriter pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
-		int numOfInput = Integer.parseInt(br.readLine());
+		Kattio io = new Kattio(System.in, System.out);
+		int numOfInput = io.getInt();
 		
 		for (int nthInput = 0; nthInput < numOfInput; nthInput++) {
-			String[] strarr = br.readLine().split(" ");
-			int K = Integer.parseInt(strarr[0]);
-			int N = Integer.parseInt(strarr[1]);
+			io.print(io.getInt());
+			int N = io.getInt();
 			
-			long s1 = SumKindOfProblem.computeAP(N, 1, 1);
-			long s2 = SumKindOfProblem.computeAP(N, 1, 2);
-			long s3 = SumKindOfProblem.computeAP(N, 2, 2);
-			pw.println(K + " " + s1 + " " + s2 + " " + s3);
+			int s1 = SumKindOfProblem.computeAP(N, 1, 1);
+			int s2 = N * N;
+			int s3 = s2 + N;
+			io.print(" ");
+			io.print(s1);
+			io.print(" ");
+			io.print(s2);
+			io.print(" ");
+			io.println(s3);
 		}
-		pw.flush();
-		pw.close();
+		io.close();
 	}
 }
