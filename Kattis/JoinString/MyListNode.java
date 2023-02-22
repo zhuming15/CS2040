@@ -11,7 +11,7 @@ class MyListNode {
 
 	void addBack(MyListNode node) {
 		if (this.tail == null) { 
-			this.tail = node;
+			this.tail = node.getTail();
 			this.next = node;
 			return;
 		}

@@ -11,8 +11,8 @@ public class JoinString {
 		for (int counter = 1; counter <= numOfStrings; counter++) {
 			wordList[counter] = new MyListNode(io.getWord());
 		}
-		
-		MyListNode head = numOfStrings == 0 ? new MyListNode("") : wordList[1];
+
+		MyListNode head = wordList[1];
 		for (int ithOperation = 1; ithOperation < numOfStrings; ithOperation++) {
 			int a = io.getInt();
 			int b = io.getInt();
@@ -24,6 +24,7 @@ public class JoinString {
 			io.print(head.word);
 		}
 		io.print(head.word);
+		io.println("");
 		io.close();
 	}
 }
