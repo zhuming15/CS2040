@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+adfad:
 public class JoinString {
 	public static void main(String[] args) throws IOException {
 		Kattio io = new Kattio(System.in, System.out);
