@@ -1,30 +1,42 @@
 import java.io.*;
 import java.util.*;
-adfad:
+
 public class JoinString {
-	public static void main(String[] args) throws IOException {
-		Kattio io = new Kattio(System.in, System.out);
+	private final int numOfStrings;
+	private MyListNode[] wordList;
+	private static Kattio io = new Kattio(System.in, System.out);
 
-		int numOfStrings = io.getInt();
-		MyListNode[] wordList = new MyListNode[numOfStrings+2];
-
-		for (int counter = 1; counter <= numOfStrings; counter++) {
-			wordList[counter] = new MyListNode(io.getWord());
+	JoinString() {
+		this.numOfStrings = io.getInt();
+		this.wordList = new MyListNode[numOfStrings+2];
+		for (int nthWord = 1; nthWord <= this.numOfStrings; nthWord++) {
+			this.wordList[nthWord] = new MyListNode(io.getWord());
 		}
+	}
 
-		MyListNode head = wordList[1];
+	MyListNode connectWords() {
+		MyListNode startPoint = wordList[1];
 		for (int ithOperation = 1; ithOperation < numOfStrings; ithOperation++) {
 			int a = io.getInt();
 			int b = io.getInt();
 			wordList[a].addBack(wordList[b]);
-			head = wordList[a];
+			startPoint = wordList[a];
 		}
+		return startPoint;
+	}
 
+	void printSentence(MyListNode head) {
 		for (; head.next != null; head = head.next) {
 			io.print(head.word);
 		}
-		io.print(head.word);
-		io.println("");
+		io.println(head.word);
+	}
+			
+
+	public static void main(String[] args) throws IOException {
+		JoinString test = new JoinString();
+		MyListNode frontWord = test.connectWords();
+		test.printSentence(frontWord);
 		io.close();
 	}
 }
