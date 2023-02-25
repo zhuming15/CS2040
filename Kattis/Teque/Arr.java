@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Arr {
-	public int capacity = 10;
+	public int capacity = 6;
 	public int[] arr = new int[capacity];
 	public int headIndex = capacity/2;
 	public int tailIndex = capacity/2;
@@ -58,9 +58,9 @@ class Arr {
 	}
 
 	private void updateAllAttributes(int newSize) {
+		this.headIndex = capacity;
+		this.tailIndex = headIndex + numOfItems - 1;
 		this.capacity = newSize;
-		this.headIndex = capacity/2;
-		this.tailIndex = headIndex + numOfItems;
 	}
 
 	public void enlargeArr() {
