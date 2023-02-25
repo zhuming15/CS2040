@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Arr {
-	public int capacity = 1000;
+	public int capacity = 10;
 	public int[] arr = new int[capacity];
 	public int headIndex = capacity/2;
 	public int tailIndex = capacity/2;
@@ -14,6 +14,8 @@ class Arr {
 	public int get(int index) { return arr[headIndex+index]; }
 
 	public void pushFront(int item) {
+		if (headIndex < 1) 
+			enlargeArr();
 		if (this.isEmpty()) {
 			numOfItems++;
 			arr[headIndex] = item;
@@ -25,6 +27,8 @@ class Arr {
 	}
 
 	public void pushBack(int item) {
+		if (tailIndex+1 > capacity-1)
+			enlargeArr();
 		if (this.isEmpty()) {
 			numOfItems++;
 			arr[tailIndex] = item;
@@ -61,11 +65,6 @@ class Arr {
 		headIndex = capacity/2;
 		tailIndex = capacity/2;
 
-
-		if (temp == null) { // i.e. not enough memory to create an array of newSize
-			System.out.println("run out of memory!");
-			System.exit(1);
-		}
 		// copy the original array to the new array
 		for (int j=0; j < numOfItems; j++)
 			temp[headIndex+j] = arr[oldHeadIndex+j];
