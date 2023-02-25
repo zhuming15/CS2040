@@ -24,9 +24,7 @@ class Teque {
 
 	public void pushMiddle(int item) {
 		int insertionIndex = (this.size() + 1) / 2;
-		while (frontArr.size() != insertionIndex) {
-			frontArr.pushBack(backArr.removeFront());
-		}
+		balanceArr(insertionIndex);
 		backArr.pushFront(item);
 	}
 
@@ -35,6 +33,12 @@ class Teque {
 			return frontArr.get(index);
 		}
 		return backArr.get(index-frontArr.size());
+	}
+
+	public void balanceArr(int n) {
+		while (frontArr.size() < n) {
+			frontArr.pushBack(backArr.removeFront());
+		}
 	}
 
 	public void print() {

@@ -57,13 +57,17 @@ class Arr {
 		return temp;
 	}
 
+	private void updateAllAttributes(int newSize) {
+		this.capacity = newSize;
+		this.headIndex = capacity/2;
+		this.tailIndex = headIndex + numOfItems;
+	}
+
 	public void enlargeArr() {
 		int newSize = capacity * 2; // double size
 		int[] temp = new int[newSize];
 		int oldHeadIndex = headIndex;
-		capacity = newSize;
-		headIndex = capacity/2;
-		tailIndex = capacity/2;
+		this.updateAllAttributes(newSize);
 
 		// copy the original array to the new array
 		for (int j=0; j < numOfItems; j++)
