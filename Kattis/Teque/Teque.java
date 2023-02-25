@@ -1,8 +1,8 @@
 import java.util.*;
 
 class Teque {
-	public PseudoArr frontArr = new PseudoArr();
-	public PseudoArr backArr = new PseudoArr();
+	public Arr frontArr = new Arr();
+	public Arr backArr = new Arr();
 
 	public int size() { return frontArr.size() + backArr.size(); }
 
