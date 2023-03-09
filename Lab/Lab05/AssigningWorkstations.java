@@ -16,23 +16,23 @@ class AssigningWorkstations {
 			researchersQ.add(new Researcher(io.getInt(), io.getInt()));
 		}
 		
-		int numOfUnlock = 0;
+		int numOfUnlockSaved = 0;
 
 		while (!researchersQ.isEmpty()) {
 			Researcher curResearcher = researchersQ.poll();
-			int bestComputer = computerQ.poll();
-			if (curResearcher.arrivalTime < bestComputer) {
-				numOfUnlock++;
+			int mostFreeComputer = computerQ.poll();
+			int researcherArrTime = curResearcher.arrivalTime;
+			if (researcherArrTime < mostFreeComputer) {
 				computerQ.add(curResearcher.computeFinishTime());
-				computerQ.add(bestComputer);
-			} else if (curResearcher.arrivalTime < bestComputer + autoLockPeriod) {
+				computerQ.add(mostFreeComputer);
+			} else if (researcherArrTime <= mostFreeComputer + autoLockPeriod) {
+				numOfUnlockSaved++;
 				computerQ.add(curResearcher.computeFinishTime());
 			} else {
-				numOfUnlock++;
 				computerQ.add(curResearcher.computeFinishTime());
 			}
 		}
-		io.println(numOfUnlock);
+		io.println(numOfUnlockSaved);
 		io.close();
 	}
 }
