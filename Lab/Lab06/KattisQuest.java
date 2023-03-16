@@ -12,7 +12,9 @@ class KattisQuest {
 
 	void add(int energy, int gold) {
 		if (gold > largestGold) largestGold = gold + 1;
-		pool.add(new Quest(energy, gold));
+		Quest temp = new Quest(energy, gold);
+		if (pool.contains(temp)) { pool.ceiling(temp).addRepitition(); }
+		else { pool.add(temp); }
 	}
 
 	void query(int energy) {
@@ -20,8 +22,9 @@ class KattisQuest {
 		long totalGold = 0;
 		while (temp != null) {
 			totalGold += temp.gold;
-			pool.remove(temp);
 			energy -= temp.energy;
+			if (temp.repitition == 1) { pool.remove(temp); }
+			else { temp.subtractRepitition(); } 
 			temp = pool.floor(new Quest(energy, largestGold));
 		}
 		io.println(totalGold);
