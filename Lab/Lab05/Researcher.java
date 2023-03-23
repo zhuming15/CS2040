@@ -12,4 +12,9 @@ class Researcher {
 	int computeFinishTime() {
 		return arrivalTime + workingTime;
 	}
+
+	@Override
+	public String toString() {
+		return "" + arrivalTime;
+	}
 }
