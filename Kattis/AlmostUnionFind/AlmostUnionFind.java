@@ -21,14 +21,16 @@ class AlmostUnionFind {
 		Kattio io = new Kattio(System.in, System.out);
 		while (io.hasMoreTokens()) {
 			int N = io.getInt();
-			int numOfOperations = io.getInt();
+			int M = io.getInt();
 			AlmostUnionFind test = new AlmostUnionFind(N);
-			
-			while (numOfOperations-- > 0) {
+			test.printSet(io);	
+			while (M-- > 0) {
 				int operation = io.getInt();
 				test.runOperation(operation, io);
+				test.printSet(io);
 			}
 		}
 		io.flush();
+		io.close();
 	}
 }					
