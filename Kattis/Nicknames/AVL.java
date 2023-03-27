@@ -21,7 +21,7 @@ class AVL {
 		}
 		v.updateSize();
 		v.updateHeight();
-		return v;
+		return rotateTree(v);
 	}
 
 	public String search(String name) {
