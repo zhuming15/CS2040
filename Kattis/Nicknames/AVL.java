@@ -9,22 +9,18 @@ class AVL {
 
 	public void insert(String name) { root = insert(root, name); }
 
-	public Vertex insert(Vertex v, String name) {
+	private Vertex insert(Vertex v, String name) {
 		if (v == null) { 
-			Vertex res = new Vertex(name);
-			res.height++;
-			return res;
-		}
-		int temp = name.compareTo(v.key);
-		v.height++;
-		if (temp > 0) {
+			v = Vertex.of(name); 
+		} else if (name.compareTo(v.key) > 0) {
 			v.right = insert(v.right, name);
 			v.right.parent = v;
 		} else {
 			v.left = insert(v.left, name);
 			v.left.parent = v;
 		}
-		rotateTree(v);
+		v.updateSize();
+		v.updateHeight();
 		return v;
 	}
 
@@ -33,72 +29,76 @@ class AVL {
 		return res == null ? "" : res.key;
 	}
 
-	public Vertex search(Vertex v, String name) {
+	private Vertex search(Vertex v, String name) {
 		if (v == null) { return null; }
-		int temp = name.compareTo(v.key);
-			 if (temp == 0) { return v; }
-		else if (temp > 0)  { return search(v.right, name); }
-		else 				{ return search(v.left, name); }
+		if (v.key.indexOf(name) == 0) { return v; }
+		else if (name.compareTo(v.key) > 0)  { return search(v.right, name); }
+		else { return search(v.left, name); }
 	}
 
 	public int countMatches(String nickname) {
-		return countMatches(root, nickname);
-	}
-
-	public int countMatches(Vertex v, String nickname) {
+		Vertex v = search(root, nickname);
 		if (v == null) { return 0; }
-		int diff = nickname.compareTo(v.key.substring(0,nickname.length()));
-			 if (diff > 0) { return countMatches(v.right, nickname); }
-		else if (diff < 0) { return countMatches(v.left, nickname); }
-		else               { return 1 + countMatches(v.left, nickname) + countMatches(v.right, nickname); }
+		else { return 1 + countLeftMatches(v.left, nickname) + countRightMatches(v.right, nickname); }
 	}
 
-	public int balanceFactorOf(Vertex v) { 
-		if (v == null) { return 0; }
-		int left = v.left == null ? 0 : v.left.height;
-		int right = v.right == null ? 0 : v.right.height;
-		return left - right;
+	private int countRightMatches(Vertex vr, String nickname) {
+		if (vr == null) { return 0; }
+		if (vr.key.indexOf(nickname) == 0) { return 1 + vr.getSize(vr.left) + countRightMatches(vr.right, nickname); }
+		else { return countRightMatches(vr.left, nickname); }
 	}
 
-	public void rotateTree(Vertex v) {
+	private int countLeftMatches(Vertex vl, String nickname) {
+		if (vl == null) { return 0; }
+		if (vl.key.indexOf(nickname) == 0) {  
+			return 1 + vl.getSize(vl.right) + countLeftMatches(vl.left, nickname); }
+		else { return countLeftMatches(vl.right, nickname); }
+	}
+
+	public int balanceFactorOf(Vertex v) { return (v == null) ? 0 : (v.getBalanceFactor()); }
+
+	public Vertex rotateTree(Vertex v) {
 		int bfValue = balanceFactorOf(v);
-		int bfValueLeft = balanceFactorOf(v.left);
-		int bfValueRight = balanceFactorOf(v.right);
 		if (bfValue == 2) {
-			if (0 <= bfValueLeft && bfValueLeft <= 1) {
-				rightRotate(v);
-			} else if (bfValueLeft == -1) {
-				leftRotate(v.left);
-				rightRotate(v);
-			}
+			int bfValueLeft = balanceFactorOf(v.left);
+			if (bfValueLeft == -1) { v.left = leftRotate(v.left); }
+			v = rightRotate(v);
 		} else if (bfValue == -2) {
-			if (-1 <= bfValueRight && bfValueRight <= 0) {
-				leftRotate(v);
-			} else if (bfValueRight == 1) {
-				rightRotate(v.right);
-				leftRotate(v);
-			}
+			int bfValueRight = balanceFactorOf(v.right);
+			if (bfValueRight == 1) { v.right = rightRotate(v.right); }
+			v = leftRotate(v);
 		}
+		return v;
 	}
 
 	private Vertex leftRotate(Vertex v) {
-		Vertex w = v.right;
-		w.parent = v.parent;
-		v.parent = w;
-		v.right = w.left;
-		if (w.left != null) { w.left.parent = v; }
-		w.left = v;
-		return w;
+		Vertex r = v.right;
+		r.parent = v.parent;
+		v.parent = r;
+		v.right = r.left;
+		if (r.left != null) { r.left.parent = v; }
+		r.left = v;
+
+		v.updateHeight();
+		v.updateSize();
+		r.updateHeight();
+		r.updateSize();
+		return r;
 	}
 
 	private Vertex rightRotate(Vertex v) {
-		Vertex w = v.left;
-		w.parent = v.parent;
-		v.parent = w;
-		v.left = w.right;
-		if (w.right != null) { w.right.parent = v; }
-		w.right = v;
-		return w;
+		Vertex l = v.left;
+		l.parent = v.parent;
+		v.parent = l;
+		v.left = l.right;
+		if (l.right != null) { l.right.parent = v; }
+		l.right = v;
+
+		v.updateHeight();
+		v.updateSize();
+		l.updateHeight();
+		l.updateSize();
+		return l;
 	}
 }
 
