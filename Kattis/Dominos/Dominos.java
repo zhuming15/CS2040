@@ -7,14 +7,18 @@ class Dominos {
 		while (numOfTestCases-- > 0) {
 			int numOfTiles = io.getInt();
 			int numOfEdges = io.getInt();
-			boolean[] tiles = new boolean[numOfTiles+1];
+			boolean[] tiles = new boolean[100000];
+			UFDS sets = new UFDS(numOfTiles);
 			while (numOfEdges-- > 0) {
 				int s = io.getInt();
 				int d = io.getInt();
-				tiles[d] = true;
+				if (sets.canUnion(s,d)) {
+					tiles[d] = true;
+				}
 			}
 			int numOfKnockedDown = 0;
 			for (int i = 1; i <= numOfTiles; i++) {
+				System.out.println(i);
 				if (!tiles[i]) { numOfKnockedDown++; }
 			}
 			io.println(numOfKnockedDown);
