@@ -5,7 +5,7 @@ class Edge implements Comparable<Edge> {
 	int destination;
 	int weight;
 
-	Edge (int source, int destination, int weight) {
+	Edge (int destination, int source, int weight) {
 		this.source = source;
 		this.destination = destination;
 		this.weight = weight;

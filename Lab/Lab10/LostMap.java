@@ -7,7 +7,7 @@ class LostMap {
 
 	LostMap(int numOfVillages) {
 		this.numOfVillages = numOfVillages;
-		this.connected = new boolean[numOfVillages + 2];
+		this.connected = new boolean[numOfVillages + 1];
 	}
 
 	void readInput(Kattio io) {
@@ -25,23 +25,29 @@ class LostMap {
 
 	void KruskalMST(Kattio io) {
 		int numOfEdges = numOfVillages;
+		UFDS set = new UFDS(numOfVillages);
 		while (numOfEdges != 0) {
 			Edge currEdge = edgeList.poll();
 			int source = currEdge.getSource();
 			int dest   = currEdge.getDestination();
-			if (connected[source] && connected[dest]) { continue; }
-			if (!connected[source]) { 
-				--numOfEdges;
-				connected[source] = true;
+			if (set.union(source, dest)) { 
+				if (connected[source] && connected[dest]) { continue; }
+				if (!connected[source]) { 
+					--numOfEdges;
+					connected[source] = true;
+				}
+				if (!connected[dest])   { 
+					--numOfEdges;
+					connected[dest] = true;
+				}
+				io.print(source);
+				io.print(" ");
+				io.println(dest);
+			} else {
+				continue;
 			}
-			if (!connected[dest])   { 
-				--numOfEdges;
-				connected[dest] = true;
-		   	}
-			io.print(source);
-			io.print(" ");
-			io.println(dest);
 		}
+		System.out.println(Arrays.toString(connected));
 	}
 
 	public static void main(String[] args) {
