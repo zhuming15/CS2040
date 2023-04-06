@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 class LostMap {
 	PriorityQueue<Edge> edgeList = new PriorityQueue<Edge>();
@@ -10,18 +11,17 @@ class LostMap {
 		this.numOfEdgesRequired = numOfVillages - 1;
 	}
 
-	void readInput(Kattio io) {
+	void readInput(BufferedReader br) throws IOException {
 		for (int i = 1; i <= numOfVillages; i++) {
-			for (int j = 1; j <= numOfVillages; j++) {
-				if (i <= j)
-					io.getInt();
-				else
-					edgeList.add(new Edge(i, j, io.getInt()));
+			String[] strArr = br.readLine().split(" ");
+			for (int j = i; j < numOfVillages; j++) {
+				edgeList.add(new Edge(i, j+1, Integer.parseInt(strArr[j])));
 			}
 		}
+		System.out.println(edgeList.toString());
 	}
 
-	void KruskalMST(Kattio io) {
+	void KruskalMST(PrintWriter pw) {
 		UFDS set = new UFDS(numOfVillages);
 		while (numOfEdgesRequired != 0) {
 			Edge currEdge = edgeList.poll();
@@ -29,20 +29,21 @@ class LostMap {
 			int dest   = currEdge.getDestination();
 			if (set.canUnion(source, dest)) { 
 				--numOfEdgesRequired;
-				io.print(source);
-				io.print(" ");
-				io.println(dest);
+				pw.print(source);
+				pw.print(" ");
+				pw.println(dest);
 			}
 		}
 	}
 
-	public static void main(String[] args) {
-		Kattio io = new Kattio(System.in, System.out);
-		int numOfVillages = io.getInt();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(System.out));
+		int numOfVillages = Integer.parseInt(br.readLine());
 		LostMap test = new LostMap(numOfVillages);
-		test.readInput(io);
-		test.KruskalMST(io);
-		io.flush();
-		io.close();
+		test.readInput(br);
+		test.KruskalMST(pw);
+		pw.flush();
+		pw.close();
 	}
 }
