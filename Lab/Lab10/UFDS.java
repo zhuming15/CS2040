@@ -19,11 +19,11 @@ class UFDS {
 		return parent[i];
 	}
 
-	boolean union(int i, int j) {
+	boolean canUnion(int i, int j) {
 		int iParent = find(i);
 		int jParent = find(j);
 		if (iParent != jParent) {
-				 if (rank[iParent] < rank[jParent]) { parent[iParent] = jParent; }
+			if (rank[iParent] < rank[jParent]) { parent[iParent] = jParent; }
 			else if (rank[iParent] > rank[jParent]) { parent[jParent] = iParent; }
 			else    {
 				parent[iParent] = jParent;
