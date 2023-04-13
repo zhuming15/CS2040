@@ -10,8 +10,8 @@ class HumanCanonball {
 	int numOfCannons = -1;
 	int numOfPoints = -1;
 
-	void readInitialPosition(double x, double y) { this.initialPos = new Point(x, y); }
-	void readFinalPosition(double x, double y)   { this.finalPos   = new Point(x, y); }
+	void readInitialPosition(double x, double y) { this.initialPos = new Point(x, y, 0, 0); }
+	void readFinalPosition(double x, double y)   { this.finalPos   = new Point(x, y, 1); }
 
 	void readNumOfCannons(int numOfCannons) { 
 		this.numOfCannons = numOfCannons;
@@ -19,9 +19,11 @@ class HumanCanonball {
 	}
 
 	void readCannonList(Kattio io) {
-		this.cannonList = new Point[numOfCannons];
-		for (int i = 0; i < numOfCannons; i++ ) {
-			cannonList[i] = new Point(io.getDouble(), io.getDouble());
+		this.cannonList = new Point[numOfPoints];
+		cannonList[0] = initialPos;
+		cannonList[1] = finalPos;
+		for (int i = 2; i < numOfPoints; i++) {
+			cannonList[i] = new Point(io.getDouble(), io.getDouble(), i);
 		}
 	}
 
@@ -35,42 +37,41 @@ class HumanCanonball {
 		mat[1][0] = mat[0][1];
 
 		for (int i = 0; i < numOfCannons; i++) {
-			double initialToCannonDist = initialPos.distanceTo(cannonList[i]);
+			double initialToCannonDist = initialPos.distanceTo(cannonList[i+2]);
 			mat[0][i+2] = RunOnlyTimeFor(initialToCannonDist);
 			mat[i+2][0] = LaunchThenRunTimeFor(initialToCannonDist);
 		}
 
 		for (int i = 0; i < numOfCannons; i++) {
-			double finalToCannonDist = finalPos.distanceTo(cannonList[i]);
+			double finalToCannonDist = finalPos.distanceTo(cannonList[i+2]);
 			mat[1][i+2] = RunOnlyTimeFor(finalToCannonDist);
 			mat[i+2][1] = LaunchThenRunTimeFor(finalToCannonDist);
 		}
 
 		for (int i = 0; i < numOfCannons; i++) {
 			for (int j = i+1; j < numOfCannons; j++) {
-				double distBetweenCannons = cannonList[i].distanceTo(cannonList[j]);
+				double distBetweenCannons = cannonList[i+2].distanceTo(cannonList[j+2]);
 				mat[i+2][j+2] = LaunchThenRunTimeFor(distBetweenCannons);
 				mat[j+2][i+2] = mat[i+2][j+2];
 			}
 		}
-
 		return mat;
 	}
 
 	double dijkstraShortestTime(double[][] distMatrix) {
-		boolean[] visited = new boolean[numOfPoints];
 		double[] time = new double[numOfPoints];
 		Arrays.fill(time, Double.MAX_VALUE);
-		PriorityQueue<Pair> pq = new PriorityQueue<Pair>();
-		pq.add(new Pair(0,0));
+		PriorityQueue<Point> pq = new PriorityQueue<Point>();
+		pq.add(cannonList[0]);
 		while (!pq.isEmpty()) {
-			Pair cur = pq.poll();
-			if (!visited[cur.i]) {
-				visited[cur.i] = true;
+			Point cur = pq.poll();
+			if (!cur.visited) {
+				cur.visited = true;
 				for (int i = 0; i < numOfPoints; i++) {
-					if (!visited[i] && cur.dist + distMatrix[cur.i][i] < time[i]) {
-						time[i] = cur.dist + distMatrix[cur.i][i];
-						pq.add(new Pair(i, time[i]));
+					if (!cannonList[i].visited && cur.time + distMatrix[cur.index][i] < time[i]) {
+						time[i] = cur.time + distMatrix[cur.index][i];
+						cannonList[i].time = time[i];
+						pq.add(cannonList[i]);
 					}
 				}
 			}
